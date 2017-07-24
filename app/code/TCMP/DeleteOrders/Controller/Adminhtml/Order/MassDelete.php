@@ -35,9 +35,26 @@ class MassDelete extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassA
 	{
 		$countDeletedOrder = 0;
 		foreach ( $collection->getItems() as $order ) {
-			//@TODO - check if paid?
+			/** @var \Magento\Sales\Model\Order $order */
+			$_shipments = $order->getShipmentsCollection();
+			if ( $_shipments->getTotalCount() > 0 ) {
+				foreach ( $_shipments as $shipment ) {
+					$shipment->delete();
+				}
+			}
+			$_invoices = $order->getInvoiceCollection();
+			if ( $_invoices->getTotalCount() > 0 ) {
+				foreach ( $_invoices as $invoice ) {
+					$invoice->delete();
+				}
+			}
+			$_creditMemos = $order->getCreditmemosCollection();
+			if ( $_creditMemos->getTotalCount() > 0 ) {
+				foreach ( $_creditMemos as $creditMemo ) {
+					$creditMemo->delete();
+				}
+			}
 			$order->delete();
-			//@TODO invoices & shipments
 			$countDeletedOrder ++;
 		}
 		$countNonDeletedOrder = $collection->count() - $countDeletedOrder;

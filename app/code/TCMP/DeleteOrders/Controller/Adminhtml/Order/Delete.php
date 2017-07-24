@@ -23,7 +23,8 @@ class Delete extends \Magento\Sales\Controller\Adminhtml\Order {
 	public function execute()
 	{
 		$resultRedirect = $this->resultRedirectFactory->create();
-		$order          = $this->_initOrder();
+		/** @var \Magento\Sales\Model\Order $order */
+		$order = $this->_initOrder();
 		if ( ! $order ) {
 			$this->messageManager->addError( __( 'You have not deleted the item.' ) );
 
@@ -32,6 +33,25 @@ class Delete extends \Magento\Sales\Controller\Adminhtml\Order {
 
 		if ( $order ) {
 			try {
+				$_shipments = $order->getShipmentsCollection();
+				if ( $_shipments->getTotalCount() > 0 ) {
+					foreach ( $_shipments as $shipment ) {
+						$shipment->delete();
+					}
+				}
+				$_invoices = $order->getInvoiceCollection();
+				if ( $_invoices->getTotalCount() > 0 ) {
+					foreach ( $_invoices as $invoice ) {
+						$invoice->delete();
+					}
+				}
+				$_creditMemos = $order->getCreditmemosCollection();
+				if ( $_creditMemos->getTotalCount() > 0 ) {
+					foreach ( $_creditMemos as $creditMemo ) {
+						$creditMemo->delete();
+					}
+				}
+
 				$order->delete();
 				$this->messageManager->addSuccess( __( 'You deleted the order.' ) );
 			} catch ( \Magento\Framework\Exception\LocalizedException $e ) {
