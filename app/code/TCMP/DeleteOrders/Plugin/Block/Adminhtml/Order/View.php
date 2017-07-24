@@ -2,15 +2,34 @@
 
 namespace TCMP\DeleteOrders\Plugin\Block\Adminhtml\Order;
 
-
+/**
+ * Class View
+ *
+ * @package TCMP\DeleteOrders\Plugin\Block\Adminhtml\Order
+ */
 class View {
 
+	/**
+	 * @var \Magento\Framework\AuthorizationInterface
+	 */
 	protected $_authorization;
 
+	/**
+	 * @var \Magento\Framework\UrlInterface
+	 */
 	protected $_urlBuilder;
 
+	/**
+	 * @var \Magento\Framework\App\RequestInterface
+	 */
 	protected $_request;
 
+	/**
+	 * View constructor.
+	 *
+	 * @param \Magento\Backend\Block\Template\Context $context
+	 * @param array                                   $data
+	 */
 	public function __construct( \Magento\Backend\Block\Template\Context $context, array $data = [] )
 	{
 		$this->_authorization = $context->getAuthorization();
@@ -18,6 +37,9 @@ class View {
 		$this->_request       = $context->getRequest();
 	}
 
+	/**
+	 * @param \Magento\Sales\Block\Adminhtml\Order\View $view
+	 */
 	public function beforeSetLayout( \Magento\Sales\Block\Adminhtml\Order\View $view )
 	{
 		if ( $this->_isAllowedAction( 'TCMP_DeleteOrders::massDelete' ) ) {
@@ -60,6 +82,9 @@ class View {
 		return $this->_urlBuilder->getUrl( $route, $params );
 	}
 
+	/**
+	 * @return mixed
+	 */
 	private function getOrderId()
 	{
 		return $this->_request->getParam( 'order_id' );

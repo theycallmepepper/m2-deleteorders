@@ -1,0 +1,38 @@
+{
+    "name": "tcmp/deleteorders",
+    "description": "Admin actions for deleting orders.",
+    "require": {
+        "php": "~7.0|~7.1",
+        "magento/magento-composer-installer": "*"
+    },
+    "suggest": {
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "TCMP\\Instagram\\": ""
+        }
+    },
+    "extra": {
+        "map": [
+            [
+                "*",
+                "TCMP/Instagram"
+            ]
+        ]
+    },
+    "authors": [
+        {
+            "name": "David Young",
+            "email": "davidaaronyoung@gmail.com",
+            "homepage": "https://www.davidaaronyoung.com",
+            "role": "Developer"
+        }
+    ]
+}
