@@ -2,8 +2,7 @@
     "name": "tcmp/deleteorders",
     "description": "Admin actions for deleting orders.",
     "require": {
-        "php": "~7.0|~7.1",
-        "magento/magento-composer-installer": "*"
+        "php": "5.6.30|~7.0|~7.1"
     },
     "repositories": [
         {
@@ -24,14 +23,6 @@
         "psr-4": {
             "TCMP\\DeleteOrders\\": ""
         }
-    },
-    "extra": {
-        "map": [
-            [
-                "*",
-                "TCMP/DeleteOrders"
-            ]
-        ]
     },
     "authors": [
         {
