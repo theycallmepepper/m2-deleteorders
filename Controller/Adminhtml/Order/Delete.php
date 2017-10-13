@@ -7,6 +7,11 @@ namespace TCMP\DeleteOrders\Controller\Adminhtml\Order;
  *
  * @package TCMP\DeleteOrders\Controller\Adminhtml\Order
  */
+/**
+ * Class Delete
+ *
+ * @package TCMP\DeleteOrders\Controller\Adminhtml\Order
+ */
 class Delete extends \Magento\Sales\Controller\Adminhtml\Order {
 	/**
 	 * Authorization level of a basic admin session
@@ -15,10 +20,10 @@ class Delete extends \Magento\Sales\Controller\Adminhtml\Order {
 	 */
 	const ADMIN_RESOURCE = 'TCMP_DeleteOrders::delete';
 
+
 	/**
-	 * Cancel order
-	 *
-	 * @return \Magento\Backend\Model\View\Result\Redirect
+	 * Delete order
+	 * @return \Magento\Framework\Controller\Result\Redirect
 	 */
 	public function execute()
 	{
@@ -53,11 +58,11 @@ class Delete extends \Magento\Sales\Controller\Adminhtml\Order {
 				}
 
 				$order->delete();
-				$this->messageManager->addSuccess( __( 'You deleted the order.' ) );
+				$this->messageManager->addSuccessMessage( __( 'The order has been deleted.' ) );
 			} catch ( \Magento\Framework\Exception\LocalizedException $e ) {
-				$this->messageManager->addError( $e->getMessage() );
+				$this->messageManager->addErrorMessage( $e->getMessage() );
 			} catch ( \Exception $e ) {
-				$this->messageManager->addError( __( 'You have not deleted the order.' ) );
+				$this->messageManager->addErrorMessage( __( 'The order has not been deleted.' ) );
 				$this->_objectManager->get( 'Psr\Log\LoggerInterface' )->critical( $e );
 			}
 		}

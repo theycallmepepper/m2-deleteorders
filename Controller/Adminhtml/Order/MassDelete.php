@@ -9,7 +9,7 @@ use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 
 /**
  * Class MassDelete
- *
+ * @todo refactor - parent class deprecated
  * @package TCMP\DeleteOrders\Controller\Adminhtml\Order
  */
 class MassDelete extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction {
@@ -24,12 +24,13 @@ class MassDelete extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassA
 		$this->collectionFactory = $collectionFactory;
 	}
 
+
 	/**
 	 * Delete selected orders
 	 *
 	 * @param AbstractCollection $collection
 	 *
-	 * @return \Magento\Backend\Model\View\Result\Redirect
+	 * @return \Magento\Framework\Controller\Result\Redirect
 	 */
 	protected function massAction( AbstractCollection $collection )
 	{
@@ -59,14 +60,12 @@ class MassDelete extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassA
 		}
 		$countNonDeletedOrder = $collection->count() - $countDeletedOrder;
 
-		if ( $countNonDeletedOrder && $countDeletedOrder ) {
-			$this->messageManager->addError( __( '%1 order(s) cannot be deleted.', $countNonDeletedOrder ) );
-		} elseif ( $countNonDeletedOrder ) {
-			$this->messageManager->addError( __( 'You cannot delete the order(s).' ) );
+		if ( $countNonDeletedOrder ) {
+			$this->messageManager->addErrorMessage( __( '%1 order(s) cannot be deleted.', $countNonDeletedOrder ) );
 		}
 
 		if ( $countDeletedOrder ) {
-			$this->messageManager->addSuccess( __( 'We deleted %1 order(s).', $countDeletedOrder ) );
+			$this->messageManager->addSuccessMessage( __( '%1 order(s) have been deleted.', $countDeletedOrder ) );
 		}
 		$resultRedirect = $this->resultRedirectFactory->create();
 		$resultRedirect->setPath( $this->getComponentRefererUrl() );
